@@ -13,6 +13,7 @@ namespace FPointGame.GenericTypes
         /// Current point of the instance.
         /// </summary>
         public Point SubContent;
+		public Point PubContent { get; private set; }
         private readonly int imageLength;
         private const int fixedLength = 10;
         private const int moveLength = 20;
@@ -25,20 +26,28 @@ namespace FPointGame.GenericTypes
         /// <param name="length">Instanse length.</param>
         public Prey(int X, int Y, int length)
         {
-            SubContent.X = X;
-            SubContent.Y = Y;
+			SubContent = new Point(X, Y);
             imageLength = length;
         }
 
-        /// <summary>
-        /// Updates instance's information.
-        /// </summary>
-        /// <param name="message">Passed message.</param>
-        public void Update(Message<Point> message)
+		public Prey(Point location, int length)
+		{
+			SubContent = location;
+			imageLength = length;
+		}
+
+		/// <summary>
+		/// Updates instance's information.
+		/// </summary>
+		/// <param name="message">Passed message.</param>
+		public void Update(Message<Point> message)
         {
-            message.Dispose();
+			PubContent = message.Content;
+
             MovePoint(message.Content);
-        }
+			message.Dispose();
+		}
+
 
         private bool Contains(int coord1, int coord2, List<int> xCoord, List<int> yCoord, bool flagXY)
         {
@@ -58,6 +67,10 @@ namespace FPointGame.GenericTypes
             return false;
         }
 
+		/// <summary>
+		/// Analyzer of where to go.
+		/// </summary>
+		/// <param name="content">Hunter location.</param>
         private void MovePoint(Point content)
         {
             int[,] array = new int[4, 2]
