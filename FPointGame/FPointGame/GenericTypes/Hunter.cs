@@ -10,7 +10,7 @@ namespace FPointGame.GenericTypes
     public class Hunter<TContent> : IPublisher<TContent>
     {
         private TContent data;
-        private IChannel<TContent> medium;
+        private IChannel<TContent> channel;
         private readonly bool isClass = typeof(TContent).IsClass;
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace FPointGame.GenericTypes
         /// <param name="medium">Passed data.</param>
         public Hunter(IChannel<TContent> medium)
         {
-            this.medium = medium ?? throw new ArgumentNullException(nameof(medium));
+            this.channel = channel ?? throw new ArgumentNullException(nameof(medium));
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace FPointGame.GenericTypes
                 throw new ArgumentNullException(nameof(message));
             }
 
-            medium.NotifyAll(message);
+			channel.NotifyAll(message);
         }
     }
 }
