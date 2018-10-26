@@ -60,6 +60,7 @@ namespace FPointGame
             hunt.Content = new Point(hunter.Left, hunter.Top);
             subscriber.Left = chanSubscriber.SubContent.X;
             subscriber.Top = chanSubscriber.SubContent.Y;
+
         }
 
 
