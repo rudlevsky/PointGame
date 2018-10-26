@@ -27,6 +27,7 @@ namespace FPointGame.GenericTypes
         public void Update(Message<Point> message)
         {
             Content = message.Content;
+            //message.Dispose();
             MovePoint();
         }
 

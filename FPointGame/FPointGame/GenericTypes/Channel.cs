@@ -20,6 +20,8 @@ namespace FPointGame.GenericTypes
             {
                 subsList[i].Update(new Message<TContent>(message.Content));
             }
+
+            message.Dispose();
         }
 
         public void AddSubscriber(ISubscriber<TContent> subscriber)
