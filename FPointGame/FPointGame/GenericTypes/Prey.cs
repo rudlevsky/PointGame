@@ -4,12 +4,25 @@ using FPointGame.Interfaces;
 
 namespace FPointGame.GenericTypes
 {
+    /// <summary>
+    /// Class contains methods and realization of ISubscriber interface.
+    /// </summary>
     public class Prey : ISubscriber<Point>
     {
+        /// <summary>
+        /// Current point of the instance.
+        /// </summary>
         public Point SubContent;
         private readonly int imageLength;
-        private readonly int fixedLength = 10;
+        private const int fixedLength = 10;
+        private const int moveLength = 20;
 
+        /// <summary>
+        /// Class constructor.
+        /// </summary>
+        /// <param name="X">X coordinate of the point.</param>
+        /// <param name="Y">y coordinate of the point.</param>
+        /// <param name="length">Instanse length.</param>
         public Prey(int X, int Y, int length)
         {
             SubContent.X = X;
@@ -17,6 +30,10 @@ namespace FPointGame.GenericTypes
             imageLength = length;
         }
 
+        /// <summary>
+        /// Updates instance's information.
+        /// </summary>
+        /// <param name="message">Passed message.</param>
         public void Update(Message<Point> message)
         {
             message.Dispose();
@@ -41,14 +58,14 @@ namespace FPointGame.GenericTypes
             return false;
         }
 
-        private void MovePoint(Point Content)
+        private void MovePoint(Point content)
         {
             int[,] array = new int[4, 2]
             {
-                { Content.X - fixedLength, Content.Y - fixedLength },
-                { Content.X + imageLength + fixedLength, Content.Y - fixedLength },
-                { Content.X - fixedLength, Content.Y + imageLength + fixedLength },
-                { Content.X + imageLength + fixedLength, Content.Y + imageLength + fixedLength }
+                { content.X - fixedLength, content.Y - fixedLength },
+                { content.X + imageLength + fixedLength, content.Y - fixedLength },
+                { content.X - fixedLength, content.Y + imageLength + fixedLength },
+                { content.X + imageLength + fixedLength, content.Y + imageLength + fixedLength }
             };
 
             var xCoord = new List<int>();
@@ -69,28 +86,27 @@ namespace FPointGame.GenericTypes
 
             if (Contains(SubContent.X, SubContent.Y - fixedLength, xCoord, yCoord, true))
             {
-                SubContent.Y += 20;
+                SubContent.Y += moveLength;
                 return;
             }
 
             if (Contains(SubContent.X,SubContent.Y + imageLength + fixedLength, xCoord, yCoord, true))
             {
-                SubContent.Y -= 20;
+                SubContent.Y -= moveLength;
                 return;
             }
 
             if (Contains(SubContent.Y, SubContent.X - fixedLength, xCoord, yCoord, false))
             {
-                SubContent.X += 20;
+                SubContent.X += moveLength;
                 return;
             }
 
             if (Contains(SubContent.Y, SubContent.X + imageLength + fixedLength, xCoord, yCoord, false))
             {
-                SubContent.X -= 20;
+                SubContent.X -= moveLength;
                 return;
             }
         }
-
     }
 }

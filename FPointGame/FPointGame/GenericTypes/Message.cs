@@ -10,20 +10,24 @@ namespace FPointGame.GenericTypes
     {
 		private bool _isDisposed;
 
-		/// <summary>
-		/// A container which has our message data.
-		/// </summary>
-		public TContent Content { get; }
-
+        /// <summary>
+        /// Class's constructor.
+        /// </summary>
+        /// <param name="data">Passed data.</param>
         public Message(TContent data)
         {
             Content = data;
         }
 
-		/// <summary>
-		/// Dipose the <see cref="Message{TContent}"/>.
-		/// </summary>
-		public void Dispose()
+        /// <summary>
+        /// A container which has our message data.
+        /// </summary>
+        public TContent Content { get; }
+
+        /// <summary>
+        /// Dispose the <see cref="Message{TContent}"/>.
+        /// </summary>
+        public void Dispose()
 		{
 			this.Dispose(true);
 		}
@@ -42,6 +46,9 @@ namespace FPointGame.GenericTypes
 			this._isDisposed = true;
 		}
 
+        /// <summary>
+        /// Dispose destructor.
+        /// </summary>
 		~Message()
 		{
 			Dispose(false);
