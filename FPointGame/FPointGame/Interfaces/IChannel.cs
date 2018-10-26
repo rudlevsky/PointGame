@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FPointGame.GenericTypes;
+﻿using FPointGame.GenericTypes;
 
 namespace FPointGame.Interfaces
 {
@@ -15,9 +10,19 @@ namespace FPointGame.Interfaces
         /// <summary>
         /// Notify all subscribers about message.
         /// </summary>
+        /// <param name="message">Passed message.</param>
         void NotifyAll(Message<TContent> message);
 
+        /// <summary>
+        /// Adds new subscriber.
+        /// </summary>
+        /// <param name="subscriber">New subscriber.</param>
         void AddSubscriber(ISubscriber<TContent> subscriber);
+
+        /// <summary>
+        /// Removes subscriber.
+        /// </summary>
+        /// <param name="subscriber">Subscriber for removing.</param>
         void RemoveSubscriber(ISubscriber<TContent> subscriber);
     }
 }

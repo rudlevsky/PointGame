@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using FPointGame.Interfaces;
 
@@ -10,12 +6,9 @@ namespace FPointGame.GenericTypes
 {
     public class Prey : ISubscriber<Point>
     {
-        private Point Content;
         public Point SubContent;
         private readonly int imageLength;
         private readonly int fixedLength = 10;
-        private List<int> iks;
-        private List<int> igr;
 
         public Prey(int X, int Y, int length)
         {
@@ -26,21 +19,20 @@ namespace FPointGame.GenericTypes
 
         public void Update(Message<Point> message)
         {
-            Content = message.Content;
-            //message.Dispose();
-            MovePoint();
+            message.Dispose();
+            MovePoint(message.Content);
         }
 
-        private bool Contains(int coord1, int coord2, bool flagXY)
+        private bool Contains(int coord1, int coord2, List<int> xCoord, List<int> yCoord, bool flagXY)
         {
             for (int i = coord1; i < coord1 + imageLength; i++)
             {
-                if (iks.Contains(i) && igr.Contains(coord2) && flagXY)
+                if (xCoord.Contains(i) && yCoord.Contains(coord2) && flagXY)
                 {
                     return true;
                 }
 
-                if (iks.Contains(coord2) && igr.Contains(i) && !flagXY)
+                if (xCoord.Contains(coord2) && yCoord.Contains(i) && !flagXY)
                 {
                     return true;
                 }
@@ -49,7 +41,7 @@ namespace FPointGame.GenericTypes
             return false;
         }
 
-        private void MovePoint()
+        private void MovePoint(Point Content)
         {
             int[,] array = new int[4, 2]
             {
@@ -59,8 +51,8 @@ namespace FPointGame.GenericTypes
                 { Content.X + imageLength + fixedLength, Content.Y + imageLength + fixedLength }
             };
 
-            iks = new List<int>();
-            igr = new List<int>();
+            var xCoord = new List<int>();
+            var yCoord = new List<int>();
 
             int Y = array[0, 1];
 
@@ -68,76 +60,36 @@ namespace FPointGame.GenericTypes
             {
                 for (int i = array[0, 0]; i < array[1, 0]; i++)
                 {
-                    iks.Add(i);
-                    igr.Add(Y);
+                    xCoord.Add(i);
+                    yCoord.Add(Y);
                 }
 
                 Y++;
             }
 
-            if (Contains(SubContent.X, SubContent.Y - fixedLength, true))
+            if (Contains(SubContent.X, SubContent.Y - fixedLength, xCoord, yCoord, true))
             {
                 SubContent.Y += 20;
                 return;
             }
 
-            if (Contains(SubContent.X,SubContent.Y + imageLength + fixedLength, true))
+            if (Contains(SubContent.X,SubContent.Y + imageLength + fixedLength, xCoord, yCoord, true))
             {
                 SubContent.Y -= 20;
                 return;
             }
 
-            if (Contains(SubContent.Y, SubContent.X - fixedLength, false))
+            if (Contains(SubContent.Y, SubContent.X - fixedLength, xCoord, yCoord, false))
             {
                 SubContent.X += 20;
                 return;
             }
 
-            if (Contains(SubContent.Y, SubContent.X + imageLength + fixedLength, false))
+            if (Contains(SubContent.Y, SubContent.X + imageLength + fixedLength, xCoord, yCoord, false))
             {
                 SubContent.X -= 20;
                 return;
             }
-
-            //int[,] coordinates = new int[]
-
-            //bool IsFree = false;
-
-            //while(!IsFree)
-            // {
-
-
-            /*if ((SubContent.Y + imageLength) >= array[0, 1] && (SubContent.X >= array[0, 0] && SubContent.X <= array[1, 0] ||
-                SubContent.X + imageLength >= array[0, 0] && SubContent.X <= array[1, 0]))
-            {
-                SubContent.Y += 10;
-                return;
-            } */
-
-            /*if ( (SubContent.X <= array[1, 0] && array[1, 0] <= SubContent.X + imageLength) && (  ((SubContent.Y >= array[1, 1]) && (SubContent.Y <= array[3, 1])) ||
-                 (((SubContent.Y + imageLength) >= array[1, 1]) && (SubContent.Y <= array[3, 1]))) )
-            {
-                SubContent.Y += 10;
-                return;
-            }
-            /*
-            if ((SubContent.Y) <= array[2, 1] && (SubContent.X >= array[2, 0] && SubContent.X <= array[3, 0] ||
-                SubContent.X + imageLength >= array[2, 0] && SubContent.X <= array[3, 0]))
-            {
-                SubContent.Y += 10;
-                return;
-            }
-
-            if ((SubContent.X + imageLength) >= array[0, 0] && (SubContent.Y >= array[0, 1] && SubContent.Y <= array[2, 1] ||
-                SubContent.Y + imageLength >= array[0, 1] && SubContent.Y + imageLength <= array[2, 1]))
-            {
-                SubContent.Y += 10;
-                return;
-            }
-            //  }*/
-
-
-
         }
 
     }

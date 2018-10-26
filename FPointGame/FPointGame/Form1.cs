@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using FPointGame.GenericTypes;
 
@@ -19,7 +12,7 @@ namespace FPointGame
             chanSubscriber = new Prey(subscriber.Left, subscriber.Top, subscriber.Width);
             chanel = new Channel<Point>();
             chanel.AddSubscriber(chanSubscriber);
-            hunt = new Hunter<Point>(chanel);        
+            hunt = new Hunter<Point>(chanel);
         }
 
         private const int LEFT = 37;
@@ -60,14 +53,14 @@ namespace FPointGame
             hunt.Content = new Point(hunter.Left, hunter.Top);
             subscriber.Left = chanSubscriber.SubContent.X;
             subscriber.Top = chanSubscriber.SubContent.Y;
+
+            if (subscriber.Left >= ActiveForm.Size.Width || subscriber.Left <= 0 
+                || subscriber.Top <= 0 || subscriber.Top >= ActiveForm.Height)
+            {
+                subscriber.Visible = false;
+                hunter.Visible = false;
+                gOver.Visible = true;
+            }
         }
-
-
-
-
-
-
-
-
     }
 }

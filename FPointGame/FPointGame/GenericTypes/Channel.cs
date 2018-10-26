@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FPointGame.Interfaces;
 
 namespace FPointGame.GenericTypes
@@ -13,7 +10,6 @@ namespace FPointGame.GenericTypes
 
         public void NotifyAll(Message<TContent> message)
         {
-            //Message<TContent> message = (Message<TContent>)msg;
             if (message == null) throw new ArgumentNullException(nameof(message));
 
             for (int i = 0; i < subsList.Count; i++)

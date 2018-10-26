@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FPointGame.GenericTypes;
+﻿using FPointGame.GenericTypes;
 
 namespace FPointGame.Interfaces
 {
@@ -15,7 +10,7 @@ namespace FPointGame.Interfaces
         /// <summary>
         /// Publish a message about itself.
         /// </summary>
-        /// <param name="medium"></param>
+        /// <param name="message">Passed message.</param>
         void Publish(Message<TContent> message);
     }
 }
